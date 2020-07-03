@@ -10,7 +10,7 @@ Package to retry failed jobs in batches using custom filters.
 
 You can install the package via composer:
 
-```bash
+```console
 composer require kirschbaum-development/laravel-queue-batch-retry
 ```
 
@@ -18,7 +18,7 @@ composer require kirschbaum-development/laravel-queue-batch-retry
 
 You have a few different filters you can use to retry jobs in batches.
 
-```bash
+```console
 php artisan queue:batch-retry --failed-after="2 days ago" --queue="default" --limit=10 --filter="CrawlWebsiteJob"
 ```
 
