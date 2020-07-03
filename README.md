@@ -52,7 +52,7 @@ php artisan queue:batch-retry --limit=10
 We always get afraid of screwing things up, right? You can run dry run the command and see what's going to be executed first.
 
 ```console
-php artisan queue:batch-retry --dry-run
+$ php artisan queue:batch-retry --dry-run
 ```
 
 ### Changelog
