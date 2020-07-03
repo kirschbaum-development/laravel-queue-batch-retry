@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/support": "^6.0"
+        "illuminate/support": "^6.0|^7.0"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "KirschbaumDevelopment\\LaravelQueueBatchRetry\\": "src"
+            "KirschbaumDevelopment\\BatchRetry\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "KirschbaumDevelopment\\LaravelQueueBatchRetry\\Tests\\": "tests"
+            "KirschbaumDevelopment\\BatchRetry\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -44,10 +44,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "KirschbaumDevelopment\\LaravelQueueBatchRetry\\LaravelQueueBatchRetryServiceProvider"
+                "KirschbaumDevelopment\\BatchRetry\\BatchRetryServiceProvider"
             ],
             "aliases": {
-                "LaravelQueueBatchRetry": "KirschbaumDevelopment\\LaravelQueueBatchRetry\\LaravelQueueBatchRetryFacade"
+                "BatchRetry": "KirschbaumDevelopment\\BatchRetry\\BatchRetryFacade"
             }
         }
     }
