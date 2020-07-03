@@ -1,0 +1,54 @@
+{
+    "name": "kirschbaum-development/laravel-queue-batch-retry",
+    "description": "Package to retry failed jobs in batch using custom filters",
+    "keywords": [
+        "kirschbaum-development",
+        "laravel-queue-batch-retry"
+    ],
+    "homepage": "https://github.com/kirschbaum-development/laravel-queue-batch-retry",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Luis Dalmolin",
+            "email": "luis.nh@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "KirschbaumDevelopment\\LaravelQueueBatchRetry\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KirschbaumDevelopment\\LaravelQueueBatchRetry\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "KirschbaumDevelopment\\LaravelQueueBatchRetry\\LaravelQueueBatchRetryServiceProvider"
+            ],
+            "aliases": {
+                "LaravelQueueBatchRetry": "KirschbaumDevelopment\\LaravelQueueBatchRetry\\LaravelQueueBatchRetryFacade"
+            }
+        }
+    }
+}
