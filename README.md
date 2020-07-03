@@ -1,9 +1,7 @@
 # Laravel Queue Batch Retry
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://packagist.org/packages/kirschbaum-development/laravel-queue-batch-retry)
-[![Build Status](https://img.shields.io/travis/kirschbaum-development/laravel-queue-batch-retry/master.svg?style=flat-square)](https://travis-ci.org/kirschbaum-development/laravel-queue-batch-retry)
-[![Quality Score](https://img.shields.io/scrutinizer/g/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://scrutinizer-ci.com/g/kirschbaum-development/laravel-queue-batch-retry)
-[![Total Downloads](https://img.shields.io/packagist/dt/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://packagist.org/packages/kirschbaum-development/laravel-queue-batch-retry)
+[![Actions Status](https://github.com/kirschbaum-development/laravel-queue-batch-retry/workflows/CI/badge.svg)](https://github.com/kirschbaum-development/laravel-queue-batch-retry/actions)
+[![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 
 Package to retry failed jobs in batches using custom filters.
 
@@ -23,10 +21,37 @@ You have a few different filters you can use to retry jobs in batches.
 php artisan queue:batch-retry --failed-after="2 days ago" --queue="default" --limit=10 --filter="CrawlWebsiteJob"
 ```
 
-### Testing
+*--filter*
 
-``` bash
-composer test
+The `failed_jobs` table is not really a structured table, so "searching" is basically a `like` condition on the `payload` condition. Using this option, depending on how many records you have, could be very slow since it will have to do a full table scan to find results. Hopefully, you don't have a lot of failed jobs, though.
+
+```
+php artisan queue:batch-retry --filter="PublishDocumentJob"
+php artisan queue:batch-retry --filter="12234"
+```
+
+*--failed-after*
+
+This option filters `failed_at` column. So let's say you had a bunch of jobs that failed today because of some API error in one of the services you use. You can retry all the jobs that failed since "today".
+
+```
+php artisan queue:batch-retry --failed-after="today"
+```
+
+*--limit*
+
+In case you want to run in just a specific number of jobs.
+
+```
+php artisan queue:batch-retry --limit=10
+```
+
+*--dry-run*
+
+We always get afraid of screwing things up, right? You can run dry run the command and see what's going to be executed first.
+
+```
+php artisan queue:batch-retry --dry-run
 ```
 
 ### Changelog
@@ -39,17 +64,16 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
-If you discover any security related issues, please email luis.nh@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email luis@kirschbaumdevelopment.com or nathan@kirschbaumdevelopment.com instead of using the issue tracker.
 
 ## Credits
 
-- [Luis Dalmolin](https://github.com/kirschbaum-development)
-- [All Contributors](../../contributors)
+- [Luis Dalmolin](https://github.com/luisdalmolin)
+
+## Sponsorship
+
+Development of this package is sponsored by Kirschbaum Development Group, a developer driven company focused on problem solving, team building, and community. Learn more [about us](https://kirschbaumdevelopment.com) or [join us](https://kirschbaumdevelopment.com/careers)!
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
