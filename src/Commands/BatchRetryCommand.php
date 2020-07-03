@@ -39,7 +39,6 @@ class BatchRetryCommand extends Command
                 $query->where('queue', $this->option('queue'));
             })
             ->when($this->option('failed-after'), function ($query) {
-                // dd(Carbon::parse($this->option('failed-after')));
                 $query->where(
                     'failed_at',
                     '>=',
@@ -54,14 +53,24 @@ class BatchRetryCommand extends Command
             $failedJobs->take($this->option('limit'))
                 ->get()
                 ->each(function (FailedJob $failedJob) {
-                    $this->call('queue:retry', ['id' => $failedJob->id]);
+                    $this->retry($failedJob);
                 });
         } else {
             $failedJobs->chunkById(50, function ($jobsChunk) {
                 $jobsChunk->each(function (FailedJob $failedJob) {
-                    $this->call('queue:retry', ['id' => $failedJob->id]);
+                    $this->retry($failedJob);
                 });
             });
         }
+    }
+
+    protected function retry($failedJob)
+    {
+        if ($this->option('dry-run')) {
+            $this->comment('[DRY RUN] Retrying job with ID ' . $failedJob->id);
+            return;
+        }
+
+        $this->call('queue:retry', ['id' => $failedJob->id]);
     }
 }

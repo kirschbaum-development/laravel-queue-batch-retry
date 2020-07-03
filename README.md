@@ -5,7 +5,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://scrutinizer-ci.com/g/kirschbaum-development/laravel-queue-batch-retry)
 [![Total Downloads](https://img.shields.io/packagist/dt/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://packagist.org/packages/kirschbaum-development/laravel-queue-batch-retry)
 
-Package to retry failed jobs in batch using custom filters.
+Package to retry failed jobs in batches using custom filters.
 
 ## Installation
 
@@ -17,8 +17,10 @@ composer require kirschbaum-development/laravel-queue-batch-retry
 
 ## Usage
 
-``` php
-// Usage description here
+You have a few different filters you can use to retry jobs in batches.
+
+```bash
+php artisan queue:batch-retry --failed-after="2 days ago" --queue="default" --limit=10 --filter="CrawlWebsiteJob"
 ```
 
 ### Testing

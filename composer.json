@@ -45,10 +45,7 @@
         "laravel": {
             "providers": [
                 "KirschbaumDevelopment\\BatchRetry\\BatchRetryServiceProvider"
-            ],
-            "aliases": {
-                "BatchRetry": "KirschbaumDevelopment\\BatchRetry\\BatchRetryFacade"
-            }
+            ]
         }
     }
 }
