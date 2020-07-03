@@ -4,7 +4,7 @@
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://packagist.org/packages/kirschbaum-development/laravel-queue-batch-retry)
 
-Package to retry failed jobs in batches using custom filters.
+Laravel only allows you to retry one job per time or all of them when using the `queue:retry` command. This package gives you a few more options so you retry failed jobs in batches filtering to only the jobs you want.
 
 ## Installation
 
