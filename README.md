@@ -39,6 +39,14 @@ This option filters `failed_at` column. So let's say you had a bunch of jobs tha
 php artisan queue:batch-retry --failed-after="today"
 ```
 
+**--failed-before**
+
+Same as the failed-after, but looking at previous dates.
+
+```console
+php artisan queue:batch-retry --failed-before="yesterday"
+```
+
 **--limit**
 
 In case you want to run in just a specific number of jobs.

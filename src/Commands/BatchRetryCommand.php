@@ -14,6 +14,7 @@ class BatchRetryCommand extends Command
      * @var string
      */
     protected $signature = 'queue:batch-retry
+        {--failed-before= : Only batch retry jobs failed before some specific date}
         {--failed-after= : Only batch retry jobs failed after some specific date}
         {--limit= : Limit the amount of jobs to retry}
         {--queue= : Only retry on a specific queue}
@@ -37,6 +38,13 @@ class BatchRetryCommand extends Command
         $failedJobs = FailedJob::query()
             ->when($this->option('queue'), function ($query) {
                 $query->where('queue', $this->option('queue'));
+            })
+            ->when($this->option('failed-before'), function ($query) {
+                $query->where(
+                    'failed_at',
+                    '<=',
+                    Carbon::parse($this->option('failed-before'))->format('Y-m-d H:i:s')
+                );
             })
             ->when($this->option('failed-after'), function ($query) {
                 $query->where(

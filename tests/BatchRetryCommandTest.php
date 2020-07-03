@@ -103,4 +103,19 @@ class BatchRetryCommandTest extends TestCase
         $this->assertCount(0, $newJobs->fresh()->filter());
         $this->assertCount(5, $oldJobs->fresh()->filter());
     }
+
+    /** @test */
+    public function it_can_batch_retry_limiting_by_date_before()
+    {
+        $newJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()]);
+        $oldJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()->subDays(10)]);
+
+        Artisan::call('queue:batch-retry', [
+            '--failed-before' => '5 days ago',
+        ]);
+
+        $this->assertEquals(5, DB::table('jobs')->count());
+        $this->assertCount(5, $newJobs->fresh()->filter());
+        $this->assertCount(0, $oldJobs->fresh()->filter());
+    }
 }
