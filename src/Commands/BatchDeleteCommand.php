@@ -6,14 +6,14 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use KirschbaumDevelopment\BatchRetry\FailedJob;
 
-class BatchRetryCommand extends Command
+class BatchDeleteCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'queue:batch-retry
+    protected $signature = 'queue:batch-delete
         {--failed-before= : Only batch retry jobs failed before some specific date}
         {--failed-after= : Only batch retry jobs failed after some specific date}
         {--limit= : Limit the amount of jobs to retry}
@@ -26,7 +26,7 @@ class BatchRetryCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Retry queue failed jobs in batch using filters.';
+    protected $description = 'Delete queue failed jobs in batch using filters.';
 
     /**
      * Execute the console command.
@@ -55,30 +55,10 @@ class BatchRetryCommand extends Command
             })
             ->when($this->option('filter'), function ($query) {
                 $query->where('payload', 'like', '%'.$this->option('filter').'%');
-            });
-
-        if ($this->option('limit')) {
-            $failedJobs->take($this->option('limit'))
-                ->get()
-                ->each(function (FailedJob $failedJob) {
-                    $this->retry($failedJob);
-                });
-        } else {
-            $failedJobs->chunkById(50, function ($jobsChunk) {
-                $jobsChunk->each(function (FailedJob $failedJob) {
-                    $this->retry($failedJob);
-                });
-            });
-        }
-    }
-
-    protected function retry($failedJob)
-    {
-        if ($this->option('dry-run')) {
-            $this->comment('[DRY RUN] Retrying job with ID ' . $failedJob->id);
-            return;
-        }
-
-        $this->call('queue:retry', ['id' => $failedJob->id]);
+            })
+            ->when($this->option('limit'), function ($query) {
+                $query->take($this->option('limit'));
+            })
+            ->delete();
     }
 }

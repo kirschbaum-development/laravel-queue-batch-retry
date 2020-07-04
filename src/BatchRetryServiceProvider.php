@@ -4,6 +4,7 @@ namespace KirschbaumDevelopment\BatchRetry;
 
 use Illuminate\Support\ServiceProvider;
 use KirschbaumDevelopment\BatchRetry\Commands\BatchRetryCommand;
+use KirschbaumDevelopment\BatchRetry\Commands\BatchDeleteCommand;
 
 class BatchRetryServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,7 @@ class BatchRetryServiceProvider extends ServiceProvider
 
             $this->commands([
                 BatchRetryCommand::class,
+                BatchDeleteCommand::class,
             ]);
         }
     }

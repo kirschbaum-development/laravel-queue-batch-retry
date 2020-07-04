@@ -16,7 +16,9 @@ composer require kirschbaum-development/laravel-queue-batch-retry
 
 ## Usage
 
-You have a few different filters you can use to retry jobs in batches.
+There's two different commands this package provides.
+
+### queue:batch-retry
 
 ```console
 php artisan queue:batch-retry --failed-after="2 days ago" --queue="default" --limit=10 --filter="CrawlWebsiteJob"
@@ -62,6 +64,11 @@ We always get afraid of screwing things up, right? You can run dry run the comma
 ```console
 php artisan queue:batch-retry --dry-run
 ```
+### queue:batch-delete
+
+In case you simply want to clean up your failed jobs table, there's also a `queue:batch-delete` command which works exactly the same as the `queue:batch-retry` command. You can use the same filters and options provided by the retry command.
+
+***
 
 ### Changelog
 
