@@ -64,7 +64,7 @@ class BatchDeleteCommand extends Command
             $this->comment($failedJobsQuery->count() . ' failed jobs will be deleted');
         } else {
             $total = $failedJobsQuery->delete();
-            $this->comment($$total . ' jobs were deleted');
+            $this->comment($total . ' jobs were deleted');
         }
     }
 }
