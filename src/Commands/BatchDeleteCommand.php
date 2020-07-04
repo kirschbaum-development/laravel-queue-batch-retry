@@ -35,7 +35,7 @@ class BatchDeleteCommand extends Command
      */
     public function handle()
     {
-        $failedJobs = FailedJob::query()
+        $failedJobsQuery = FailedJob::query()
             ->when($this->option('queue'), function ($query) {
                 $query->where('queue', $this->option('queue'));
             })
@@ -58,7 +58,13 @@ class BatchDeleteCommand extends Command
             })
             ->when($this->option('limit'), function ($query) {
                 $query->take($this->option('limit'));
-            })
-            ->delete();
+            });
+
+        if ($this->option('dry-run')) {
+            $this->comment($failedJobsQuery->count() . ' failed jobs will be deleted');
+        } else {
+            $total = $failedJobsQuery->delete();
+            $this->comment($$total . ' jobs were deleted');
+        }
     }
 }
