@@ -13,7 +13,7 @@ class BatchRetryCommandTest extends TestCase
     {
         $failedJobs = factory(FailedJob::class, 2)->create();
 
-        Artisan::call('queue:batch-retry');
+        Artisan::call('queue:failed:batch-retry');
 
         $failedJobs->each(function ($failedJob) {
             $this->assertEquals(2, DB::table('jobs')->count());
@@ -26,7 +26,7 @@ class BatchRetryCommandTest extends TestCase
     {
         $failedJobs = factory(FailedJob::class, 75)->create();
 
-        Artisan::call('queue:batch-retry');
+        Artisan::call('queue:failed:batch-retry');
 
         $this->assertEquals(75, DB::table('jobs')->count());
         $this->assertEquals(0, FailedJob::count());
@@ -40,7 +40,7 @@ class BatchRetryCommandTest extends TestCase
             'queue' => 'priority',
         ]);
 
-        Artisan::call('queue:batch-retry', [
+        Artisan::call('queue:failed:batch-retry', [
             '--queue' => 'priority',
         ]);
 
@@ -55,7 +55,7 @@ class BatchRetryCommandTest extends TestCase
         $failedJobsThatShouldRetry = factory(FailedJob::class, 2)->create();
         $failedJobsThatShouldNotRetry = factory(FailedJob::class, 2)->create();
 
-        Artisan::call('queue:batch-retry', [
+        Artisan::call('queue:failed:batch-retry', [
             '--limit' => 2,
         ]);
 
@@ -80,7 +80,7 @@ class BatchRetryCommandTest extends TestCase
             'payload' => ['displayName' => 'App\Jobs\SomeOtherJob']
         ]);
 
-        Artisan::call('queue:batch-retry', [
+        Artisan::call('queue:failed:batch-retry', [
             '--filter' => 'SomeJob',
         ]);
 
@@ -95,7 +95,7 @@ class BatchRetryCommandTest extends TestCase
         $newJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()]);
         $oldJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()->subDays(10)]);
 
-        Artisan::call('queue:batch-retry', [
+        Artisan::call('queue:failed:batch-retry', [
             '--failed-after' => '5 days ago',
         ]);
 
@@ -110,7 +110,7 @@ class BatchRetryCommandTest extends TestCase
         $newJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()]);
         $oldJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()->subDays(10)]);
 
-        Artisan::call('queue:batch-retry', [
+        Artisan::call('queue:failed:batch-retry', [
             '--failed-before' => '5 days ago',
         ]);
 

@@ -13,7 +13,7 @@ class BatchRetryCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'queue:batch-retry
+    protected $signature = 'queue:failed:batch-retry
         {--failed-before= : Only batch retry jobs failed before some specific date}
         {--failed-after= : Only batch retry jobs failed after some specific date}
         {--limit= : Limit the amount of jobs to retry}

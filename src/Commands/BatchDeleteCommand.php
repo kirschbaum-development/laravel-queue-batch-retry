@@ -13,7 +13,7 @@ class BatchDeleteCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'queue:batch-delete
+    protected $signature = 'queue:failed:batch-delete
         {--failed-before= : Only batch retry jobs failed before some specific date}
         {--failed-after= : Only batch retry jobs failed after some specific date}
         {--limit= : Limit the amount of jobs to retry}

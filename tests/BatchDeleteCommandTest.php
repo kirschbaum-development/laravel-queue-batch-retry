@@ -13,7 +13,7 @@ class BatchDeleteCommandTest extends TestCase
     {
         $failedJobs = factory(FailedJob::class, 5)->create();
 
-        Artisan::call('queue:batch-delete');
+        Artisan::call('queue:failed:batch-delete');
 
         $this->assertCount(0, $failedJobs->fresh()->filter());
     }
@@ -26,7 +26,7 @@ class BatchDeleteCommandTest extends TestCase
             'queue' => 'priority',
         ]);
 
-        Artisan::call('queue:batch-delete', [
+        Artisan::call('queue:failed:batch-delete', [
             '--queue' => 'priority',
         ]);
 
@@ -40,7 +40,7 @@ class BatchDeleteCommandTest extends TestCase
         $failedJobsThatShouldRetry = factory(FailedJob::class, 2)->create();
         $failedJobsThatShouldNotRetry = factory(FailedJob::class, 2)->create();
 
-        Artisan::call('queue:batch-delete', [
+        Artisan::call('queue:failed:batch-delete', [
             '--limit' => 2,
         ]);
 
@@ -58,7 +58,7 @@ class BatchDeleteCommandTest extends TestCase
             'payload' => ['displayName' => 'App\Jobs\SomeOtherJob']
         ]);
 
-        Artisan::call('queue:batch-delete', [
+        Artisan::call('queue:failed:batch-delete', [
             '--filter' => 'SomeJob',
         ]);
 
@@ -72,7 +72,7 @@ class BatchDeleteCommandTest extends TestCase
         $newJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()]);
         $oldJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()->subDays(10)]);
 
-        Artisan::call('queue:batch-delete', [
+        Artisan::call('queue:failed:batch-delete', [
             '--failed-after' => '5 days ago',
         ]);
 
@@ -86,7 +86,7 @@ class BatchDeleteCommandTest extends TestCase
         $newJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()]);
         $oldJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()->subDays(10)]);
 
-        Artisan::call('queue:batch-delete', [
+        Artisan::call('queue:failed:batch-delete', [
             '--failed-before' => '5 days ago',
         ]);
 

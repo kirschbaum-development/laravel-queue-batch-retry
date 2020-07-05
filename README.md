@@ -18,10 +18,10 @@ composer require kirschbaum-development/laravel-queue-batch-retry
 
 There's two different commands this package provides.
 
-### queue:batch-retry
+### queue:failed:batch-retry
 
 ```console
-php artisan queue:batch-retry --failed-after="2 days ago" --queue="default" --limit=10 --filter="CrawlWebsiteJob"
+php artisan queue:failed:batch-retry --failed-after="2 days ago" --queue="default" --limit=10 --filter="CrawlWebsiteJob"
 ```
 
 **--filter**
@@ -29,8 +29,8 @@ php artisan queue:batch-retry --failed-after="2 days ago" --queue="default" --li
 The `failed_jobs` table is not really a structured table, so "searching" is basically a `like` condition on the `payload` condition. Using this option, depending on how many records you have, could be very slow since it will have to do a full table scan to find results. Hopefully, you don't have a lot of failed jobs, though.
 
 ```console
-php artisan queue:batch-retry --filter="PublishDocumentJob"
-php artisan queue:batch-retry --filter="12234"
+php artisan queue:failed:batch-retry --filter="PublishDocumentJob"
+php artisan queue:failed:batch-retry --filter="12234"
 ```
 
 **--failed-after**
@@ -38,7 +38,7 @@ php artisan queue:batch-retry --filter="12234"
 This option filters `failed_at` column. So let's say you had a bunch of jobs that failed today because of some API error in one of the services you use. You can retry all the jobs that failed since "today".
 
 ```console
-php artisan queue:batch-retry --failed-after="today"
+php artisan queue:failed:batch-retry --failed-after="today"
 ```
 
 **--failed-before**
@@ -46,7 +46,7 @@ php artisan queue:batch-retry --failed-after="today"
 Same as the failed-after, but looking at previous dates.
 
 ```console
-php artisan queue:batch-retry --failed-before="yesterday"
+php artisan queue:failed:batch-retry --failed-before="yesterday"
 ```
 
 **--limit**
@@ -54,7 +54,7 @@ php artisan queue:batch-retry --failed-before="yesterday"
 In case you want to run in just a specific number of jobs.
 
 ```console
-php artisan queue:batch-retry --limit=10
+php artisan queue:failed:batch-retry --limit=10
 ```
 
 **--dry-run**
@@ -62,11 +62,11 @@ php artisan queue:batch-retry --limit=10
 We always get afraid of screwing things up, right? You can run dry run the command and see what's going to be executed first.
 
 ```console
-php artisan queue:batch-retry --dry-run
+php artisan queue:failed:batch-retry --dry-run
 ```
-### queue:batch-delete
+### queue:failed:batch-delete
 
-In case you simply want to clean up your failed jobs table, there's also a `queue:batch-delete` command which works exactly the same as the `queue:batch-retry` command. You can use the same filters and options provided by the retry command.
+In case you simply want to clean up your failed jobs table, there's also a `queue:failed:batch-delete` command which works exactly the same as the `queue:failed:batch-retry` command. You can use the same filters and options provided by the retry command.
 
 ***
 
