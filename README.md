@@ -4,6 +4,7 @@
 [![Actions Status](https://github.com/kirschbaum-development/laravel-queue-batch-retry/workflows/tests/badge.svg)](https://github.com/kirschbaum-development/laravel-queue-batch-retry/actions)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://packagist.org/packages/kirschbaum-development/laravel-queue-batch-retry)
+[![Total Downloads](https://img.shields.io/packagist/dt/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://packagist.org/packages/kirschbaum-development/laravel-queue-batch-retry)
 
 Laravel only allows you to retry one job per time or all of them when using the `queue:retry` command. This package gives you a few more options so you retry failed jobs in batches filtering to only the jobs you want.
 
