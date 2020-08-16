@@ -22,7 +22,7 @@ There's two different commands this package provides.
 ### queue:failed:batch-retry
 
 ```console
-php artisan queue:failed:batch-retry --failed-after="2 days ago" --queue="default" --limit=10 --filter="CrawlWebsiteJob"
+php artisan queue:failed:batch-retry --failed-after="2 days ago" --queue="default" --limit=10 --filter="CrawlWebsiteJob" --filter-by-exception="ModelNotFoundException"
 ```
 
 **--filter**
@@ -32,6 +32,15 @@ The `failed_jobs` table is not really a structured table, so "searching" is basi
 ```console
 php artisan queue:failed:batch-retry --filter="PublishDocumentJob"
 php artisan queue:failed:batch-retry --filter="12234"
+```
+
+**--filter-by-exception**
+
+Same as the `--filter` option, but for the `exception` column in the `failed_jobs` table. Using this option, depending on how many records you have, could be very slow since it will have to do a full table scan to find results.
+
+```console
+php artisan queue:failed:batch-retry --filter-by-exception="ModelNotFoundException"
+php artisan queue:failed:batch-retry --filter-by-exception="Error when creating directory"
 ```
 
 **--failed-after**

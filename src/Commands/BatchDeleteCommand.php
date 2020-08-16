@@ -19,6 +19,7 @@ class BatchDeleteCommand extends Command
         {--limit= : Limit the amount of jobs to retry}
         {--queue= : Only retry on a specific queue}
         {--filter= : Filter by a specific string. This will be a search in the payload of the job}
+        {--filter-by-exception= : Filter by a specific string on the exception.}
         {--dry-run : Do a dry run of the batch retry to have an idea of the size of the batch}';
 
     /**
@@ -55,6 +56,9 @@ class BatchDeleteCommand extends Command
             })
             ->when($this->option('filter'), function ($query) {
                 $query->where('payload', 'like', '%'.$this->option('filter').'%');
+            })
+            ->when($this->option('filter-by-exception'), function ($query) {
+                $query->where('exception', 'like', '%'.$this->option('filter-by-exception').'%');
             })
             ->when($this->option('limit'), function ($query) {
                 $query->take($this->option('limit'));

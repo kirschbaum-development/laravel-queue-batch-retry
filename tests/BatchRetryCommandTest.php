@@ -118,4 +118,24 @@ class BatchRetryCommandTest extends TestCase
         $this->assertCount(5, $newJobs->fresh()->filter());
         $this->assertCount(0, $oldJobs->fresh()->filter());
     }
+
+    /** @test */
+    public function it_can_retry_jobs_filtering_by_exception()
+    {
+        $modelNotFoundExceptionJobs = factory(FailedJob::class, 5)->create([
+            'exception' => 'ModelNotFoundException',
+        ]);
+
+        $otherExceptionJobs = factory(FailedJob::class, 5)->create([
+            'exception' => 'Exception',
+        ]);
+
+        Artisan::call('queue:failed:batch-retry', [
+            '--filter-by-exception' => 'ModelNotFoundException'
+        ]);
+
+        $this->assertCount(0, $modelNotFoundExceptionJobs->fresh()->filter());
+        $this->assertCount(5, $otherExceptionJobs->fresh()->filter());
+        $this->assertEquals(5, DB::table('jobs')->count());
+    }
 }
