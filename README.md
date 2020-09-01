@@ -1,6 +1,6 @@
 # Laravel Queue Batch Retry
 
-![Laravel Supported Versions](https://img.shields.io/badge/laravel-6.x/7.x-green.svg)
+![Laravel Supported Versions](https://img.shields.io/badge/laravel-6.x/7.x/8.x-green.svg)
 [![Actions Status](https://github.com/kirschbaum-development/laravel-queue-batch-retry/workflows/tests/badge.svg)](https://github.com/kirschbaum-development/laravel-queue-batch-retry/actions)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kirschbaum-development/laravel-queue-batch-retry.svg?style=flat-square)](https://packagist.org/packages/kirschbaum-development/laravel-queue-batch-retry)
