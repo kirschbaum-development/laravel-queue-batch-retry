@@ -79,10 +79,10 @@ class BatchRetryCommand extends Command
     protected function retry($failedJob)
     {
         if ($this->option('dry-run')) {
-            $this->comment('[DRY RUN] Retrying job with ID ' . $failedJob->id);
+            $this->comment('[DRY RUN] Retrying job with ID ' . $failedJob->uuid ?? $failedJob->id);
             return;
         }
 
-        $this->call('queue:retry', ['id' => $failedJob->id]);
+        $this->call('queue:retry', ['id' => $failedJob->uuid ?? $failedJob->id]);
     }
 }
