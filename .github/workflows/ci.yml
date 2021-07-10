@@ -9,13 +9,8 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [7.4]
-                laravel: [7.*, 8.*]
-                include:
-                    -   laravel: 8.*
-                        testbench: 6.*
-                    -   laravel: 7.*
-                        testbench: 7.*
+                php: [7.4, 8.0]
+                laravel: [8.*]
 
         name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
 
@@ -42,9 +37,7 @@ jobs:
                     coverage: none
 
             -   name: Install dependencies
-                run: |
-                    composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                    composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                run: composer install
 
             -   name: Execute tests
                 run: vendor/bin/phpunit

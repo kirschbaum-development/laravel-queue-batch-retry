@@ -25,6 +25,7 @@ class BatchRetryCommandTest extends TestCase
     public function making_sure_the_chunks_work()
     {
         $failedJobs = factory(FailedJob::class, 75)->create();
+        $this->assertEquals(75, FailedJob::count());
 
         Artisan::call('queue:failed:batch-retry');
 
