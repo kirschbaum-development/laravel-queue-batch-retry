@@ -7,7 +7,7 @@ $factory->define(FailedJob::class, function (Faker\Generator $faker) {
         'connection' => 'database',
         'queue' => 'default',
         'payload' => [
-            'displayName' => 'App\Jobs\SomeJob',
+            'displayName' => 'App\\Jobs\\SomeJob',
         ],
         'exception' => 'something',
     ];
