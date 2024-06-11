@@ -91,6 +91,25 @@ class BatchRetryCommandTest extends TestCase
     }
 
     /** @test */
+    public function it_can_batch_retry_using_excluded_search()
+    {
+        $someFailedJob = factory(FailedJob::class)->create([
+            'payload' => ['displayName' => 'App\Jobs\SomeJob']
+        ]);
+        $someOtherFailedJob = factory(FailedJob::class)->create([
+            'payload' => ['displayName' => 'App\Jobs\SomeOtherJob']
+        ]);
+
+        Artisan::call('queue:failed:batch-retry', [
+            '--exclude-filter' => 'SomeJob',
+        ]);
+
+        $this->assertEquals(1, DB::table('jobs')->count());
+        $this->assertNotNull($someFailedJob->fresh());
+        $this->assertNull($someOtherFailedJob->fresh());
+    }
+
+    /** @test */
     public function it_can_batch_retry_limiting_by_date()
     {
         $newJobs = factory(FailedJob::class, 5)->create(['failed_at' => now()]);
