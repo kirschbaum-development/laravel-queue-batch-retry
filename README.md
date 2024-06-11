@@ -35,6 +35,14 @@ php artisan queue:failed:batch-retry --filter="PublishDocumentJob"
 php artisan queue:failed:batch-retry --filter="12234"
 ```
 
+**--exclude-filter**
+
+This is exact same as --filter, except in reverse. It will search all the payloads and exclude those given in the parameter.
+
+```console
+php artisan queue:failed:batch-retry --exclude-filter="PublishDocumentJob"
+```
+
 **--filter-by-exception**
 
 Same as the `--filter` option, but for the `exception` column in the `failed_jobs` table. Using this option, depending on how many records you have, could be very slow since it will have to do a full table scan to find results.
